@@ -1,0 +1,15 @@
+{
+    "name": "gurmesoft/marketplace-integration",
+    "description": "Trenyol, Hepsiburada gibi pazar yerlerine istek atmak için oluşturuldu",
+    "minimum-stability": "dev-master",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Gurmesoft\\MarketplaceIntegration\\": "src/"
+        }
+    },
+   
+    "require": {
+        "guzzlehttp/guzzle": "7.0"
+    }
+}

@@ -28,7 +28,6 @@ class HttpClient
     {
         try {
             $response = $this->client->get($url, ["query" => $query]);
-
             return (object)[
                 "statusCode" => 200,
                 "success" => true,

@@ -1,10 +1,10 @@
 <?php
 
-namespace Gurmesoft\MarketplaceIntegration\Services;
+namespace Gurmesoft\MarketplaceIntegration\Services\Trendyol;
 
-use Gurmesoft\MarketplaceIntegration\Services\BaseService;
+use Gurmesoft\MarketplaceIntegration\Services\Trendyol\TrendyolService;
 
-class TrendyolService extends BaseService
+class ProductService extends TrendyolService
 {
     public function __construct($userInfo)
     {
@@ -84,15 +84,22 @@ class TrendyolService extends BaseService
      * @param int $endDate
      * @return object
      */
-    public function filterProducts($approved = true, $barcode = '', $page = 0, $size = 50, $dateQueryType = 'CREATED_DATE', $startDate = 0, $endDate = 0)
-    {
+    public function filterProducts(
+        $approved = true,
+        $barcode = '',
+        $page = 0,
+        $size = 50,
+        $dateQueryType = 'CREATED_DATE',
+        $startDate = 0,
+        $endDate = 0
+    ) {
+
         $query = [
             'approved'      => $approved,
             'barcode'       => $barcode,
-            'endDate'       => array('format' => 'unixTime'),
             'page'          => $page,
             'dateQueryType' => $dateQueryType,
-            'size'          => $size
+            'size'          => $size,
         ];
 
         if ($startDate) {

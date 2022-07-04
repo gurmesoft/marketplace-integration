@@ -75,20 +75,33 @@ class TrendyolService extends BaseService
     /**
      * Satıcının ürünlerini döndürür
      *
-     * @param array $query2
+     * @param bool $approved
+     * @param string $barcode
+     * @param int $page
+     * @param int $size
+     * @param int $dateQueryType
+     * @param int $startDate
+     * @param int $endDate
      * @return object
      */
-    public function filterProducts($query2 = [])
+    public function filterProducts($approved = true, $barcode = '', $page = 0, $size = 50, $dateQueryType = 'CREATED_DATE', $startDate = 0, $endDate = 0)
     {
         $query = [
-            'approved'      => true,
-            // 'barcode'       => '',
-            // 'startDate'     => array('format' => 'unixTime'),
-            // 'endDate'       => array('format' => 'unixTime'),
-            'page'          => 0,
-            // 'dateQueryType' => array('required' => array('CREATED_DATE', 'LAST_MODIFIED_DATE')),
-            'size'          => 50
+            'approved'      => $approved,
+            'barcode'       => $barcode,
+            'endDate'       => array('format' => 'unixTime'),
+            'page'          => $page,
+            'dateQueryType' => $dateQueryType,
+            'size'          => $size
         ];
+
+        if ($startDate) {
+            $query["startDate"] = $startDate;
+        }
+
+        if ($endDate) {
+            $query["endDate"] = $endDate;
+        }
 
         $response = $this->client->get("https://api.trendyol.com/sapigw/suppliers/{$this->sellerId}/products", $query);
 

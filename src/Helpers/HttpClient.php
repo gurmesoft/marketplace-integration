@@ -3,6 +3,7 @@
 namespace Gurmesoft\MarketplaceIntegration\Helpers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Exception;
 
 class HttpClient
@@ -28,25 +29,26 @@ class HttpClient
     {
         try {
             $response = $this->client->get($url, ["query" => $query]);
+
             return (object)[
                 "statusCode" => 200,
                 "success" => true,
                 "body" => json_decode($response->getBody())
             ];
-        } catch (Exception $e) {
-            if ($e->getCode() === 401) {
+        } catch (ClientException $e) {
+            if ($e->getResponse()) {
                 return (object)[
-                    "statusCode" => 401,
+                    "statusCode" => $e->getResponse()->getStatusCode(),
                     "success" => false,
-                    "message" => "Geçersiz login isteği."
+                    "body" => json_decode($e->getResponse()->getBody()->getContents())
                 ];
             } else {
                 return (object)[
                     "statusCode" => 500,
                     "success" => false,
-                    "message" => $e->getMessage()
+                    "body" => 'Lütfen daha sonra tekrar deneyiniz. Sorun devam ederse firma ile iletişime geçiniz.'
                 ];
-            };
+            }
         }
     }
 
@@ -64,9 +66,25 @@ class HttpClient
                 ])
             ]);
 
-            return json_decode($response->getBody());
-        } catch (Exception $e) {
-            return $e->getMessage();
+            return (object)[
+                "statusCode" => 200,
+                "success" => true,
+                "body" => json_decode($response->getBody())
+            ];
+        } catch (ClientException $e) {
+            if ($e->getResponse()) {
+                return (object)[
+                    "statusCode" => $e->getResponse()->getStatusCode(),
+                    "success" => false,
+                    "body" => json_decode($e->getResponse()->getBody()->getContents())
+                ];
+            } else {
+                return (object)[
+                    "statusCode" => 500,
+                    "success" => false,
+                    "body" => 'Lütfen daha sonra tekrar deneyiniz. Sorun devam ederse firma ile iletişime geçiniz.'
+                ];
+            }
         }
     }
 
@@ -75,14 +93,30 @@ class HttpClient
      * @param array $products
      * @return object
      */
-    public function put($url, $products = [])
+    public function put($url)
     {
         try {
-            $response = $this->client->post($url, $products);
+            $response = $this->client->put($url);
 
-            return json_decode($response->getBody());
-        } catch (Exception $e) {
-            return $e->getMessage();
+            return (object)[
+                "statusCode" => 200,
+                "success" => true,
+                "body" => json_decode($response->getBody())
+            ];
+        } catch (ClientException $e) {
+            if ($e->getResponse()) {
+                return (object)[
+                    "statusCode" => $e->getResponse()->getStatusCode(),
+                    "success" => false,
+                    "body" => json_decode($e->getResponse()->getBody()->getContents())
+                ];
+            } else {
+                return (object)[
+                    "statusCode" => 500,
+                    "success" => false,
+                    "body" => 'Lütfen daha sonra tekrar deneyiniz. Sorun devam ederse firma ile iletişime geçiniz.'
+                ];
+            }
         }
     }
 }

@@ -103,7 +103,7 @@ $productproductService->updateProducts($data);
 // data eklenecek
 $productproductService->updatePriceAndInventor($data);
 
-// Trenyol'a ürünlerini ekler 
+// POST ve PUT işlemlerinden sonra kuyruğa alınmış olan işlemin başarılı olup olmadığını döndürür
 /**
 * @param $batchRequestId
 */

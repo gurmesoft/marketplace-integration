@@ -12,12 +12,12 @@ Gurmesoft için üretilmiş kargo entegrasyon pakedi.Yurtiçi, Mng, Ptt, Sürat,
 ```json
 {
   "require": {
-    "gurmesoft/cargo": "dev-master"
+    "gurmesoft/marketplace-integration": "dev-master"
   },
   "repositories": [
     {
       "type": "github",
-      "url": "https://github.com/gurmesoft/gurmesoft-cargo"
+      "url": "https://github.com/gurmesoft/marketplace-integration"
     }
   ]
 }
@@ -28,7 +28,7 @@ Gurmesoft için üretilmiş kargo entegrasyon pakedi.Yurtiçi, Mng, Ptt, Sürat,
 `composer` kullanılarak paket çağırılır
 
 ```bash
-composer require gurmesoft/cargo:dev-master
+composer require gurmesoft/marketplace-integration:dev-master
 ```
 
 ## Adım 3
@@ -40,13 +40,15 @@ composer require gurmesoft/cargo:dev-master
 
 require 'vendor/autoload.php';
 
-$options = array(
-    'live'      => false,                       // Test ortamı için gereklidir.
-    'apiKey'    => 'XXXXXXXX',                  // Kargo firması tarafından verilen anahtar,kullanıcı vb.
-    'apiPass'   => 'XXXXXXXX',                  // Kargo firması tarafından verilen şifre,gizli anahtar vb.
-);
+use Gurmesoft\MarketplaceIntegration\Services\Trendyol\OrderService;
 
-$yurtici = new \GurmesoftCargo\Client('Yurtici', $options);
+$trendyolService = new ProductService((object)[
+    'sellerId' => 'xxx',
+    'apiKey' => 'xxx',
+    'apiKeySecret' => 'xxx',
+]);
+
+
 ```
 
 ### Gönderi oluşturma
@@ -54,50 +56,59 @@ $yurtici = new \GurmesoftCargo\Client('Yurtici', $options);
 ```php
 <?php
 
-$shipment   = new \GurmesoftCargo\Shipment;
+$productproductService = new ProductService;
 
-$shipment->setBarcode('XXXXXXXXXXXX')           // Eşsiz barkod numaranız her gönderi için yenisini türetiniz.
-->setInvoice('XXXXXXXXXXXX')                    // Gönderi fatura numarası
-->getWaybill('XXXXXXXXXXXX')                    // İrsaliye No (Ticari gönderilerde zorunludur)
-->setFirstName('Fikret')                        // Alıcı ad
-->setLastName('Çin')                            // Alıcı soyad
-->setPhone('5527161084')                        // Alıcı telefon
-->setCity('Bursa' || '16')                      // Alıcı il (Plaka kodu destekler örn. 01,16,81)
-->setDistrict('Nilüfer')                        // Alıcı ilçe bilgisi
-->setAddress('Ertuğrul Cd. Eker İş Hanı D13')   // Alıcı adres bilgisi
-->setPostcode('16120')                          // Alıcı posta kodu bilgisi (Opsiyonel)
-->setMail('info@gurmesoft.com');                // Alıcı e-posta (Opsiyonel)
+* Kayıtlı olan adresleri döndürür
 
-$result = $yurtici->createShipment($shipment);
+$productproductService->getAddresses();
 
-$result->getResponse();                         // Kargo firmasından gelen tüm cevabı incelemek için kullanılır.
+* Tüm kargo şirkerlerini döndürür
 
-if ($result->isSuccess()) {
-    echo $result->getBarcode();                 // Kargo firmasının barkod ürettiği senaryolarda barkodu taşır.
-    echo $result->getOperationCode();           // Paketin operasyon kodunu döndürür.
-    echo $result->getOperationMessage();        // Paketin operasyon mesajını döndürür.
-    echo $result->getTrackingUrl();             // Paket taşıma aşamasında ise takip linkini döndürür.
-    echo $result->getTrackingCode();            // Paket taşıma aşamasında ise takip kodunu döndürür.
-} else {
-    echo $result->getErrorCode();               // Hata kodunu döndürür.
-    echo $result->getErrorMessage();            // Hata mesajını döndürür.
-}
-```
+$productproductService->getProviders();
 
-### Gönderinin durumunu sorgulama
+* Tüm kargo şirkerlerini döndürür
 
-```php
-<?php
+$productproductService->getBrands();
 
-$barcode = 'XXXXXXXXXXXX';                      // Başarılı gönderi oluşturma sonucu kayıt edilen barkod
-$result  = $yurtici->infoShipment($barcode);    // Dönen cevabı gönderi oluşturmadaki methodlar ile inceleyebilirsiniz.
-```
+* Tüm kayıtlı kategorileri döndürür
 
-### Gönderinin iptali
+$productproductService->getCategoryTree();
 
-```php
-<?php
+* Tüm kayıtlı kategorileri döndürür
 
-$barcode = 'XXXXXXXXXXXX';                      // Başarılı gönderi oluşturma sonucu kayıt edilen barkod
-$result  = $yurtici->cancelShipment($barcode);  // Dönen cevabı gönderi oluşturmadaki methodlar ile inceleyebilirsiniz.
-```
+$productproductService->getCategoryAttributes();
+
+
+* Satıcının ürünlerini döndürür
+
+$data = [
+        $approved = true,
+        $barcode = '',
+        $page = 0,
+        $size = 50,
+        $dateQueryType = 'CREATED_DATE',
+        $startDate = 0,
+        $endDate = 0
+    )
+];
+
+$productproductService->filterProducts($data);
+
+
+* Trenyol'a ürünlerini ekler 
+// data eklenecek
+$productproductService->createProducts($data);
+
+* Trenyol'a ürünlerini ekler 
+// data eklenecek
+$productproductService->updateProducts($data);
+
+* Trenyol'a ürünlerini ekler 
+// data eklenecek
+$productproductService->updatePriceAndInventor($data);
+
+* Trenyol'a ürünlerini ekler 
+/**
+* @param $batchRequestId
+*/
+$productproductService->getBatchRequestResult($batchRequestId);

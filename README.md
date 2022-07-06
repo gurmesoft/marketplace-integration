@@ -1,9 +1,6 @@
 # marketplace-integration
+
 Entegrasyon pazar yerleri için oluşturulmuş vendor paketi
-
-# Gurmesoft/Cargo
-
-Gurmesoft için üretilmiş kargo entegrasyon pakedi.Yurtiçi, Mng, Ptt, Sürat, Aras ve Bolt kargo desteği mevcuttur.
 
 ## Adım 1
 

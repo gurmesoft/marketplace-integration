@@ -55,28 +55,28 @@ $trendyolService = new ProductService((object)[
 
 $productproductService = new ProductService;
 
-* Kayıtlı olan adresleri döndürür
+// Kayıtlı olan adresleri döndürür
 
 $productproductService->getAddresses();
 
-* Tüm kargo şirkerlerini döndürür
+// Tüm kargo şirkerlerini döndürür
 
 $productproductService->getProviders();
 
-* Tüm kargo şirkerlerini döndürür
+// Tüm kargo şirkerlerini döndürür
 
 $productproductService->getBrands();
 
-* Tüm kayıtlı kategorileri döndürür
+// Tüm kayıtlı kategorileri döndürür
 
 $productproductService->getCategoryTree();
 
-* Tüm kayıtlı kategorileri döndürür
+// Tüm kayıtlı kategorileri döndürür
 
 $productproductService->getCategoryAttributes();
 
 
-* Satıcının ürünlerini döndürür
+// Satıcının ürünlerini döndürür
 
 $data = [
         $approved = true,
@@ -92,19 +92,19 @@ $data = [
 $productproductService->filterProducts($data);
 
 
-* Trenyol'a ürünlerini ekler 
+// Trenyol'a ürünlerini ekler 
 // data eklenecek
 $productproductService->createProducts($data);
 
-* Trenyol'a ürünlerini ekler 
+// Trenyol'a ürünlerini ekler 
 // data eklenecek
 $productproductService->updateProducts($data);
 
-* Trenyol'a ürünlerini ekler 
+// Trenyol'a ürünlerini ekler 
 // data eklenecek
 $productproductService->updatePriceAndInventor($data);
 
-* Trenyol'a ürünlerini ekler 
+// Trenyol'a ürünlerini ekler 
 /**
 * @param $batchRequestId
 */

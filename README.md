@@ -89,7 +89,7 @@ $data = [
     )
 ];
 
-$productproductService->filterProducts($approved, $barcode, $page, $size, $dateQueryType, $startDate, $endDate );
+$productproductService->filterProducts($approved, $barcode, $page, $size, $dateQueryType, $startDate, $endDate);
 
 
 // Trenyol'a ürünlerini ekler 

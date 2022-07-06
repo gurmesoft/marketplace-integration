@@ -37,7 +37,7 @@ composer require gurmesoft/marketplace-integration:dev-master
 
 require 'vendor/autoload.php';
 
-use Gurmesoft\MarketplaceIntegration\Services\Trendyol\OrderService;
+use Gurmesoft\MarketplaceIntegration\Services\Trendyol\ProductService;
 
 $trendyolService = new ProductService((object)[
     'sellerId' => 'xxx',

@@ -86,7 +86,6 @@ $data = [
         $dateQueryType = 'CREATED_DATE',
         $startDate = 0,
         $endDate = 0
-    )
 ];
 
 $productproductService->filterProducts($approved, $barcode, $page, $size, $dateQueryType, $startDate, $endDate);

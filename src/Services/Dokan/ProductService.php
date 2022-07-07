@@ -4,7 +4,7 @@ namespace Gurmesoft\MarketplaceIntegration\Services\Dokan;
 
 use Gurmesoft\MarketplaceIntegration\Services\BaseService;
 
-class DokanService extends BaseService
+class ProductService extends BaseService
 {
     protected $http_url;
 

@@ -40,7 +40,7 @@ class ProductService extends BaseService
             $query["before"] = $endDate;
         }
 
-        $result = $this->client->get($this->httpUrl . "/wp-json/dokan/v1/products/", $query);
+        $result = $this->client->get($this->httpUrl . "/wp-json/dokan/v1/products", $query);
 
         return $result;
     }

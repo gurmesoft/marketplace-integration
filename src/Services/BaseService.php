@@ -14,7 +14,7 @@ class BaseService
 
     public function __construct($userInfo)
     {
-        $this->sellerId = $userInfo->sellerId;
+        $this->sellerId = !empty($userInfo->sellerId) ? $userInfo->sellerId : '';
         $this->apiKey = $userInfo->apiKey;
         $this->apiKeySecret = $userInfo->apiKeySecret;
 

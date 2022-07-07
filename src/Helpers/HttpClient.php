@@ -8,7 +8,7 @@ use Exception;
 
 class HttpClient
 {
-    public function __construct($token, $sellerId)
+    public function __construct($token, $sellerId='')
     {
         $this->client = new Client([
             'headers' => [

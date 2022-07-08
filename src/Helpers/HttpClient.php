@@ -33,14 +33,14 @@ class HttpClient
             return (object)[
                 "statusCode" => 200,
                 "success" => true,
-                "body" => (object)json_decode($response->getBody())
+                "body" => json_decode($response->getBody()->getContents())
             ];
         } catch (ClientException $e) {
             if ($e->getResponse()) {
                 return (object)[
                     "statusCode" => $e->getResponse()->getStatusCode(),
                     "success" => false,
-                    "body" => (object)json_decode($e->getResponse()->getBody()->getContents())
+                    "body" => json_decode($e->getResponse()->getBody()->getContents())
                 ];
             } else {
                 return (object)[
@@ -69,14 +69,14 @@ class HttpClient
             return (object)[
                 "statusCode" => 200,
                 "success" => true,
-                "body" => (object)json_decode($response->getBody())
+                "body" => json_decode($response->getBody()->getContents())
             ];
         } catch (ClientException $e) {
             if ($e->getResponse()) {
                 return (object)[
                     "statusCode" => $e->getResponse()->getStatusCode(),
                     "success" => false,
-                    "body" => (object)json_decode($e->getResponse()->getBody()->getContents())
+                    "body" => json_decode($e->getResponse()->getBody()->getContents())
                 ];
             } else {
                 return (object)[
@@ -101,14 +101,14 @@ class HttpClient
             return (object)[
                 "statusCode" => 200,
                 "success" => true,
-                "body" => (object)json_decode($response->getBody())
+                "body" => json_decode($response->getBody()->getContents())
             ];
         } catch (ClientException $e) {
             if ($e->getResponse()) {
                 return (object)[
                     "statusCode" => $e->getResponse()->getStatusCode(),
                     "success" => false,
-                    "body" => (object)json_decode($e->getResponse()->getBody()->getContents())
+                    "body" => json_decode($e->getResponse()->getBody()->getContents())
                 ];
             } else {
                 return (object)[

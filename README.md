@@ -40,9 +40,9 @@ require 'vendor/autoload.php';
 use Gurmesoft\MarketplaceIntegration\Services\Trendyol\ProductService;
 
 $trendyolService = new ProductService((object)[
-    'sellerId' => 'xxx',
+    'merchantId' => 'xxx',
     'apiKey' => 'xxx',
-    'apiKeySecret' => 'xxx',
+    'apiSecret' => 'xxx',
 ]);
 
 

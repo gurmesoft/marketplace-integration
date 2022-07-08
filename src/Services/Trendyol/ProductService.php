@@ -18,7 +18,7 @@ class ProductService extends TrendyolService
      */
     public function getAddresses()
     {
-        $response = $this->client->get("https://api.trendyol.com/sapigw/suppliers/{$this->sellerId}/addresses");
+        $response = $this->client->get("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/addresses");
 
         return $response;
     }
@@ -110,7 +110,7 @@ class ProductService extends TrendyolService
             $query["endDate"] = $endDate;
         }
 
-        $response = $this->client->get("https://api.trendyol.com/sapigw/suppliers/{$this->sellerId}/products", $query);
+        $response = $this->client->get("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/products", $query);
 
         return $response;
     }
@@ -122,7 +122,7 @@ class ProductService extends TrendyolService
      */
     public function createProducts($products)
     {
-        $response = $this->client->post("https://api.trendyol.com/sapigw/suppliers/{$this->sellerId}/v2/products", $products);
+        $response = $this->client->post("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/v2/products", $products);
 
         return $response;
     }
@@ -135,7 +135,7 @@ class ProductService extends TrendyolService
      */
     public function updateProducts($products)
     {
-        $response = $this->client->put("https://api.trendyol.com/sapigw/suppliers/{$this->sellerId}/products", $products);
+        $response = $this->client->put("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/products", $products);
 
         return $response;
     }
@@ -149,7 +149,7 @@ class ProductService extends TrendyolService
     public function updatePriceAndInventor($products)
     {
         $response = $this->client
-            ->post("https://api.trendyol.com/sapigw/suppliers/{$this->sellerId}/products/price-and-inventory", $products);
+            ->post("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/products/price-and-inventory", $products);
 
         return $response;
     }
@@ -163,7 +163,7 @@ class ProductService extends TrendyolService
     public function getBatchRequestResult($batchRequestId)
     {
         $response = $this->client
-            ->get("https://api.trendyol.com/sapigw/suppliers/{$this->sellerId}/products/batch-requests/{$batchRequestId}");
+            ->get("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/products/batch-requests/{$batchRequestId}");
 
         return $response;
     }

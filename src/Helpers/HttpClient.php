@@ -8,11 +8,11 @@ use Exception;
 
 class HttpClient
 {
-    public function __construct($token, $sellerId='')
+    public function __construct($token, $merchantId='')
     {
         $this->client = new Client([
             'headers' => [
-                'User-Agent' => "{$sellerId} - SelfIntegration",
+                'User-Agent' => "{$merchantId} - SelfIntegration",
                 'Accept'     => 'application/json',
                 'content-type' => 'application/json',
                 'Authorization' => 'Basic ' . $token

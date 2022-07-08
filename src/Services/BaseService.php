@@ -6,20 +6,20 @@ use Gurmesoft\MarketplaceIntegration\Helpers\HttpClient;
 
 class BaseService
 {
-    public $sellerId;
+    public $merchantId;
     public $apiKey;
-    public $apiKeySecret;
+    public $apiSecret;
 
     public $client;
 
     public function __construct($userInfo)
     {
-        $this->sellerId = !empty($userInfo->sellerId) ? $userInfo->sellerId : '';
+        $this->merchantId = !empty($userInfo->merchantId) ? $userInfo->merchantId : '';
         $this->apiKey = $userInfo->apiKey;
-        $this->apiKeySecret = $userInfo->apiKeySecret;
+        $this->apiSecret = $userInfo->apiSecret;
 
-        $credentials = base64_encode("{$this->apiKey}:{$this->apiKeySecret}");
+        $credentials = base64_encode("{$this->apiKey}:{$this->apiSecret}");
 
-        $this->client = new HttpClient($credentials, $this->sellerId);
+        $this->client = new HttpClient($credentials, $this->merchantId);
     }
 }

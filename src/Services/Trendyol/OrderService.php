@@ -63,7 +63,7 @@ class OrderService extends TrendyolService
             $query["shipmentPackageIds"] = $shipmentPackageIds;
         }
 
-        $response = $this->client->get("https://stageapi.trendyol.com/stagesapigw/suppliers/{$this->sellerId}/orders", $query);
+        $response = $this->client->get("https://stageapi.trendyol.com/stagesapigw/suppliers/{$this->merchantId}/orders", $query);
 
         return $response;
     }
@@ -76,7 +76,7 @@ class OrderService extends TrendyolService
      */
     public function updatePackage($shipmentPackageId)
     {
-        $response = $this->client->put("https://stageapi.trendyol.com/stagesapigw/suppliers/{$this->sellerId}/shipment-packages/{$shipmentPackageId}");
+        $response = $this->client->put("https://stageapi.trendyol.com/stagesapigw/suppliers/{$this->merchantId}/shipment-packages/{$shipmentPackageId}");
 
         return $response;
     }

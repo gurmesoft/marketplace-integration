@@ -4,7 +4,6 @@ namespace Gurmesoft\MarketplaceIntegration\Helpers;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use Exception;
 
 class HttpClient
 {
@@ -54,16 +53,14 @@ class HttpClient
 
     /**
      * @param string $url
-     * @param array $products
+     * @param mixed $body
      * @return object
      */
-    public function post($url, $products = [])
+    public function post($url, $body)
     {
         try {
             $response = $this->client->post($url, [
-                "body" => json_encode([
-                    "items" => $products
-                ])
+                "body" => $body
             ]);
 
             return (object)[
@@ -90,13 +87,15 @@ class HttpClient
 
     /**
      * @param string $url
-     * @param array $products
+     * @param mixed $body
      * @return object
      */
-    public function put($url)
+    public function put($url, $body)
     {
         try {
-            $response = $this->client->put($url);
+            $response = $this->client->put($url, [
+                "body" => $body
+            ]);
 
             return (object)[
                 "statusCode" => 200,

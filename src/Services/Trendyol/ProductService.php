@@ -122,7 +122,11 @@ class ProductService extends TrendyolService
      */
     public function createProducts($products)
     {
-        $response = $this->client->post("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/v2/products", $products);
+        $body = json_encode([
+            "items" => $products
+        ]);
+        
+        $response = $this->client->post("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/v2/products", $body);
 
         return $response;
     }
@@ -148,8 +152,11 @@ class ProductService extends TrendyolService
      */
     public function updatePriceAndInventor($products)
     {
+        $body = json_encode([
+            "items" => $products
+        ]);
         $response = $this->client
-            ->post("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/products/price-and-inventory", $products);
+            ->post("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/products/price-and-inventory", $body);
 
         return $response;
     }

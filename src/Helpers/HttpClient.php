@@ -118,4 +118,35 @@ class HttpClient
             }
         }
     }
+
+     /**
+     * @param string $url
+     * @return object
+     */
+    public function delete($url)
+    {
+        try {
+            $response = $this->client->delete($url);
+
+            return (object)[
+                "statusCode" => 200,
+                "success" => true,
+                "body" => json_decode($response->getBody()->getContents())
+            ];
+        } catch (ClientException $e) {
+            if ($e->getResponse()) {
+                return (object)[
+                    "statusCode" => $e->getResponse()->getStatusCode(),
+                    "success" => false,
+                    "body" => json_decode($e->getResponse()->getBody()->getContents())
+                ];
+            } else {
+                return (object)[
+                    "statusCode" => 500,
+                    "success" => false,
+                    "body" => 'Lütfen daha sonra tekrar deneyiniz. Sorun devam ederse firma ile iletişime geçiniz.'
+                ];
+            }
+        }
+    }
 }

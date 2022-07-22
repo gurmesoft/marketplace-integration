@@ -4,7 +4,7 @@ namespace Gurmesoft\MarketplaceIntegration\Services\Dokan;
 
 use Gurmesoft\MarketplaceIntegration\Services\BaseService;
 
-class ProductService extends BaseService
+class OrderService extends BaseService
 {
     protected $http_url;
 
@@ -15,22 +15,12 @@ class ProductService extends BaseService
         parent::__construct($userInfo);
     }
 
-    /**
-     * @param array $data
-     * @return object
-     */
-    public function createProduct($data)
-    {
-        $result = $this->client->post($this->httpUrl . "/wp-json/dokan/v1/products", $data);
-
-        return $result;
-    }
 
     /**
      * @param int $id
      * @return object $result
      */
-    public function getSingleOrder($id)
+    public function getSingleOrders($id)
     {
         $result = $this->client->get($this->httpUrl . "/wp-json/dokan/v1/orders/{$id}");
 
@@ -38,32 +28,28 @@ class ProductService extends BaseService
     }
 
     /**
-     * @param int $id
-     * @return object $result
-     */
-    public function getAllOrder()
-    {
-        $result = $this->client->get($this->httpUrl . "/wp-json/dokan/v1/orders");
-
-        return $result;
-    }
-
-    /**
-     * @param array $data
-     *    $data = [
-     *      (bool) $approved,
-     *      (string) $barcode,
-     *      (int) $page,
-     *      (int) $size,
-     *      (int) $startDate,
-     *      (int) $endDate
+     * Siparişleri döndürür
+     *  $data = [
+     *      (string) status => Created, Picking, Invoiced, Shipped, Cancelled, Delivered, UnDelivered, Returned, Repack, UnPacked, UnSupplied,
+     *      (string) => orderNumber,
+     *      (int) => shipmentPackageIds,
+     *      (int) page,
+     *      (int) size => (max) 200,
+     *      (string) orderByField => PackageLastModifiedDate, CreatedDate,
+     *      (string) orderByDirection => DESC, ASC,
+     *      (int) startDate => Tarih aralığı max 2 hafta,
+     *      (int) endDate => Tarih aralığı max 2 hafta
      * ]
-     * @return object
+     * @return object $response
      */
-    public function filterProducts(array $data = [])
+    public function getShipmentPackages(array $data = [])
     {
+
+        if ($data['orderNumber'] !== '') {
+            return $this->getSingleOrders($data['orderNumber']);
+        }
+
         $query = [
-            'status'        => $data['approved'] ? 'publish' : 'draft',
             'sku'           => $data['barcode'],
             'page'          => $data['page'] ? $data['page'] + 1 : 1,
             'per_page'      => $data['size'] ?? 50,
@@ -77,10 +63,11 @@ class ProductService extends BaseService
             $query["before"] = $data['endDate'];
         }
 
-        $result = $this->client->get($this->httpUrl . "/wp-json/dokan/v1/products", $query);
+        $response = $this->client->get("https://stageapi.trendyol.com/stagesapigw/suppliers/{$this->merchantId}/orders", $query);
 
-        return $result;
+        return $response;
     }
+
 
     /**
      * @param int $id

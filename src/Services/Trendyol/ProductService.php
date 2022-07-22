@@ -75,41 +75,20 @@ class ProductService extends TrendyolService
     /**
      * Satıcının ürünlerini döndürür
      *
-     * @param bool $approved
-     * @param string $barcode
-     * @param int $page
-     * @param int $size
-     * @param int $dateQueryType
-     * @param int $startDate
-     * @param int $endDate
+     * @param array $query
+     *    $query = [
+     *      (bool) $approved,
+     *      (string) $barcode,
+     *      (int) $page,
+     *      (int) $size,
+     *      (int) $dateQueryType,
+     *      (int) $startDate,
+     *      (int) $endDate
+     * ]
      * @return object
      */
-    public function filterProducts(
-        $approved = true,
-        $barcode = '',
-        $page = 0,
-        $size = 50,
-        $dateQueryType = 'CREATED_DATE',
-        $startDate = 0,
-        $endDate = 0
-    ) {
-
-        $query = [
-            'approved'      => $approved,
-            'barcode'       => $barcode,
-            'page'          => $page,
-            'dateQueryType' => $dateQueryType,
-            'size'          => $size,
-        ];
-
-        if ($startDate) {
-            $query["startDate"] = $startDate;
-        }
-
-        if ($endDate) {
-            $query["endDate"] = $endDate;
-        }
-
+    public function filterProducts(array $query = [])
+    {
         $response = $this->client->get("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/products", $query);
 
         return $response;
@@ -125,7 +104,7 @@ class ProductService extends TrendyolService
         $body = json_encode([
             "items" => $products
         ]);
-        
+
         $response = $this->client->post("https://api.trendyol.com/sapigw/suppliers/{$this->merchantId}/v2/products", $body);
 
         return $response;

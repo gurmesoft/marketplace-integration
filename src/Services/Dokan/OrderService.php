@@ -48,19 +48,19 @@ class OrderService extends BaseService
             var_dump("adana");
             return $this->getSingleOrders($data['orderNumber']);
         }
-        
+
         $query = [
             'status'        => @$data['status'],
             'sku'           => @$data['barcode'],
             'page'          => @$data['page'] ? $data['page'] + 1 : 1,
             'per_page'      => @$data['size'] ?? 50,
-            'order'         => @$data['orderByDirection'],
+            'order'         => strtolower(@$data['orderByDirection']),
         ];
-        
+
         if (isset($data['startDate'])) {
             $query["after"] = @$data['startDate'];
         }
-        
+
         if (isset($data['endDate'])) {
             $query["before"] = @$data['endDate'];
         }

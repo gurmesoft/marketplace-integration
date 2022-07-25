@@ -44,24 +44,25 @@ class OrderService extends BaseService
     public function getShipmentPackages(array $data = [])
     {
 
-        if ($data['orderNumber'] !== '') {
+        if (isset($data['orderNumber']) && !empty($data['orderNumber'])) {
+            var_dump("adana");
             return $this->getSingleOrders($data['orderNumber']);
         }
-
+        
         $query = [
-            'status'        => $data['status'],
-            'sku'           => $data['barcode'],
-            'page'          => $data['page'] ? $data['page'] + 1 : 1,
-            'per_page'      => $data['size'] ?? 50,
-            'order'         => $data['orderByDirection'] ?? 50,
+            'status'        => @$data['status'],
+            'sku'           => @$data['barcode'],
+            'page'          => @$data['page'] ? $data['page'] + 1 : 1,
+            'per_page'      => @$data['size'] ?? 50,
+            'order'         => @$data['orderByDirection'],
         ];
-
-        if ($data['startDate']) {
-            $query["after"] = $data['startDate'];
+        
+        if (isset($data['startDate'])) {
+            $query["after"] = @$data['startDate'];
         }
-
-        if ($data['endDate']) {
-            $query["before"] = $data['endDate'];
+        
+        if (isset($data['endDate'])) {
+            $query["before"] = @$data['endDate'];
         }
 
         $response = $this->client->get($this->httpUrl . "/wp-json/dokan/v1/orders", $query);
